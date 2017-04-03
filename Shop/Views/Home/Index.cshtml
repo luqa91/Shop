@@ -83,64 +83,91 @@
 <!-- Bestsellery -->
 
 
-@foreach (var bestseller in Model.Bestsellers)
-{
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="@Url.PicturesPath(bestseller.NameFileImage)" class="img-responsive">
-                </div>
-                <div class="col-md-6">
-                    <h1>@bestseller.Title</h1> <h3>A subtitle</h3>
-                    <p>@bestseller.ShortDescription</p>
-                    <a href="@Url.Action("BuyNow", "Cart", new { id=bestseller.ProductId})" class="btn btn-primary">Buy Now!</a>
-                    <a href="@Url.Action("MoreInfo", "Products" , new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
 
+
+
+
+
+
+
+<a name="services"></a>
+
+
+
+    @foreach (var bestseller in Model.Bestsellers)
+    {
+        <div class="content-section-a">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-sm-6">
+                        <hr class="section-heading-spacer">
+                        <div class="clearfix"></div>
+                        <h2 class="section-heading">@bestseller.Title <br>Special Thanks</h2>
+                        <p class="lead">@bestseller.ShortDescription A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> for providing the photographs that you see in this template. Visit their website to become a member.</p>
+
+                        <a href="@Url.Action("BuyNow", "Cart", new { id=bestseller.ProductId})" class="btn btn-primary">Buy Now!</a>
+                        <a href="@Url.Action("MoreInfo", "Products" , new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
+                    </div>
+                    <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                        <img src="@Url.PicturesPath(bestseller.NameFileImage)" class="img-responsive" style="padding-top: 40px">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+
+    }
+
+<!-- /.content-section-a 
+
+                    <div class="col-md-6">
+                        <h1></h1> <h3>A subtitle</h3>
+                        <p>bestseller.ShortDescription</p>
+                        <a href="Url.Action("BuyNow", "Cart", new { id=bestseller.ProductId})" class="btn btn-primary">Buy Now!</a>
+                        <a href="Url.Action("MoreInfo", "Products" , new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
+
+                    </div>-->
 
 
-<div class="container">
-    <div class="row">
 
-        @foreach (var category in Model.Categories)
-        {
-            <div class="col-sm-4 col-md-4">
-                <div class="post">
-                    <div class="post-img-content">
-                        <img src="@Url.IconsCategoriesPath(category.NameFileIcon)" class="img-responsive" />
-                  <!--       <span class="post-title">
-                            <b>Make a Image Blur Effects With</b><br />
-                            <b>CSS3 Blur</b>
-                        </span>
-                      
-                  -->
 
-                    </div>
-                    <div class="content">
-                        <div class="author">
-                            By <b>Bhaumik</b> |
-                            <time datetime="2014-01-20">January 20th, 2017</time>
+
+    <div class="container" style="padding-top:40px;">
+        <div class="row">
+
+            @foreach (var category in Model.Categories)
+            {
+                <div class="col-sm-4 col-md-4">
+                    <div class="post">
+                        <div class="post-img-content">
+                            <img src="@Url.IconsCategoriesPath(category.NameFileIcon)" class="img-responsive" />
+                            <!--       <span class="post-title">
+                                      <b>Make a Image Blur Effects With</b><br />
+                                      <b>CSS3 Blur</b>
+                                  </span>
+
+                            -->
+
                         </div>
-                        <div>
-                            @category.DescriptionCategory
+                        <div class="content">
+                            <div class="author">
+                                By <b>Bhaumik</b> |
+                                <time datetime="2014-01-20">January 20th, 2017</time>
+                            </div>
+                            <div>
+                                @category.DescriptionCategory
 
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                            unknown printer took a galley of type and scrambled it to make a type specimen book.
-                        </div>
-                        <div>
-                            <a href="@Url.Action("List", "Products", new {nameCategory = category.NameCategory.ToLower() })" class="btn btn-warning btn-sm">@category.NameCategory</a>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                                unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            </div>
+                            <div>
+                                <a href="@Url.Action("List", "Products", new {nameCategory = category.NameCategory.ToLower() })" class="btn btn-warning btn-sm" style="margin-top: 5px;">@category.NameCategory</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        }
+            }
 
+        </div>
     </div>
-</div>

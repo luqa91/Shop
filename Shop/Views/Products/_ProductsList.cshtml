@@ -1,5 +1,17 @@
 ﻿@model IEnumerable<Shop.Models.Product>
+@using Shop.Infrastructure
 
+
+<style>
+
+    .thumbnail img{
+
+height: 120px;
+width:auto;
+
+    }
+
+</style>
 
 
 
@@ -10,7 +22,7 @@
     {
         <div class="col-sm-4 col-lg-4 col-md-4">
             <div class="thumbnail">
-                <img src="http://placehold.it/320x150" alt="">
+                <img src="@Url.PicturesPath(product.NameFileImage)" alt="">
                 <div class="caption">
                     <h4 class="pull-right">@product.PriceProduct PLN</h4>
                     <h4>

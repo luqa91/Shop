@@ -502,3 +502,47 @@
     }
 }
 
+
+
+
+
+
+
+
+
+/*------------------------------------------------------*/
+/* Bestseller
+/*------------------------------------------------------*/
+
+
+
+/*
+ * Start Bootstrap - Landing Page (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+.lead {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+
+.content-section-a {
+    padding: 50px 0px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+
+.section-heading {
+    margin-bottom: 30px;
+}
+
+
+.section-heading-spacer {
+    float: left;
+    width: 200px;
+    border-top: 3px solid #e7e7e7;
+}
