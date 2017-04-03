@@ -20,7 +20,11 @@ namespace Shop.Controllers
 
         public ActionResult List(string nameCategory)
         {
-            return View();
+            var category = db.Categories.Include("Products").Where(k => k.NameCategory.ToLower() == nameCategory.ToLower()).Single();
+            var products = category.Products.ToList();
+
+
+            return View(products);
         }
 
         public ActionResult MoreInfo(string id)
