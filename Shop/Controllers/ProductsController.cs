@@ -27,10 +27,14 @@ namespace Shop.Controllers
             return View(products);
         }
 
-        public ActionResult MoreInfo(string id)
+        public ActionResult Details(int id)
         {
-            return View();
+            var product = db.Products.Find(id);
+            return View(product);
         }
+
+
+
 
         [ChildActionOnly]
         public ActionResult CategoryMenu()

@@ -55,7 +55,7 @@
                                 <h1 data-animation="animated zoomInRight">@news.Title-@news.Company</h1>
                                 <p data-animation="animated fadeInLeft">@news.ShortDescription</p>
                                 <a href="@Url.Action("BuyNow", "Cart", new { id = news.ProductId })" target="_blank" class="btn btn-default" data-animation="animated fadeInLeft">Buy Now</a>
-                                <a href="@Url.Action("MoreInfo", "Products", new { id = news.ProductId })" target="_blank" class="btn btn-primary" data-animation="animated fadeInRight">More Info</a>
+                                <a href="@Url.Action("Details", "Products", new { id = news.ProductId })" target="_blank" class="btn btn-primary" data-animation="animated fadeInRight">More Info</a>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                         <p class="lead">@bestseller.ShortDescription A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> for providing the photographs that you see in this template. Visit their website to become a member.</p>
 
                         <a href="@Url.Action("BuyNow", "Cart", new { id=bestseller.ProductId})" class="btn btn-primary">Buy Now!</a>
-                        <a href="@Url.Action("MoreInfo", "Products" , new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
+                        <a href="@Url.Action("Details", "Products" , new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
                     </div>
                     <div class="col-lg-5 col-lg-offset-2 col-sm-6">
                         <img src="@Url.PicturesPath(bestseller.NameFileImage)" class="img-responsive" style="padding-top: 40px">
