@@ -12,9 +12,9 @@
     <link href="@Url.Content("~/Content/navbarCart.css")" rel="stylesheet" />
 
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @System.Web.Optimization.Styles.Render("~/Content/css")
+    @System.Web.Optimization.Scripts.Render("~/bundles/modernizr")
+    @System.Web.Optimization.Styles.Render("~/Content/themes/base/css")
 </head>
 
 

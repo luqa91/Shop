@@ -18,11 +18,17 @@ namespace Shop.Controllers
             return View();
         }
 
-        public ActionResult List(string nameCategory)
+        public ActionResult List(string nameCategory, string searchQuery = null)
         {
             var category = db.Categories.Include("Products").Where(k => k.NameCategory.ToLower() == nameCategory.ToLower()).Single();
-            var products = category.Products.ToList();
+            var products = category.Products.Where(a => (searchQuery == null ||
+                           a.Title.ToLower().Contains(searchQuery.ToLower()) ||
+                           a.Company.ToLower().Contains(searchQuery.ToLower())) && !a.Hidden);
 
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_ProductsList", products);
+            }
 
             return View(products);
         }
@@ -43,7 +49,17 @@ namespace Shop.Controllers
             return PartialView("_CategoryMenu", menu);
         }
 
-        
+
+
+        public ActionResult ProductsHints(string term)
+        {
+            var products = db.Products.Where(a => !a.Hidden && a.Title.ToLower().Contains(term.ToLower()))
+                .Take(5).Select(a => new { label = a.Title });
+            return Json(products, JsonRequestBehavior.AllowGet);
+
+        }
+
+
 
     }
 }
