@@ -1,4 +1,6 @@
-﻿using Shop.DAL;
+﻿using MvcSiteMapProvider.Caching;
+using Shop.DAL;
+using Shop.Infrastructure;
 using Shop.Models;
 using Shop.ViewModels;
 using System;
@@ -14,17 +16,56 @@ namespace Shop.Controllers
         private ProductsContext db = new ProductsContext();
         public ActionResult Index()
         {
+            
 
-            var category = db.Categories.ToList();
-            var news = db.Products.Where(a => !a.Hidden).OrderByDescending(a => a.DateAdded).Take(3).ToList();
-            var bestseller = db.Products.Where(a => !a.Hidden && a.Bestseller).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
+            ICacheProvider cache = new DefaultCacheProvider();
+
+            List<Category> categories;
+            if (cache.IsSet(Consts.CategoriesCacheKey))
+            {
+                categories = cache.Get(Consts.CategoriesCacheKey) as List<Category>;
+            }
+            else
+            {
+
+                categories = db.Categories.ToList();
+                cache.Set(Consts.CategoriesCacheKey, categories, 60);
+            }
+
+
+
+
+
+            List<Product> news;
+            if(cache.IsSet(Consts.NewsCacheKey))
+            {
+                news = cache.Get(Consts.NewsCacheKey) as List<Product>;
+            }
+            else
+            {
+                news = db.Products.Where(a => !a.Hidden).OrderByDescending(a => a.DateAdded).Take(3).ToList();
+                cache.Set(Consts.NewsCacheKey, news, 60);
+            }
+
+            List<Product> bestsellers;
+            if (cache.IsSet(Consts.BestsellersCacheKey))
+            {
+                bestsellers = cache.Get(Consts.BestsellersCacheKey) as List<Product>;
+            }
+            else
+            {
+
+                bestsellers = db.Products.Where(a => !a.Hidden && a.Bestseller).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
+                cache.Set(Consts.BestsellersCacheKey, bestsellers, 60);
+            }
+
 
 
             var vm = new HomeViewModel()
             {
-                Categories = category,
+                Categories = categories,
                 News = news,
-                Bestsellers=bestseller,
+                Bestsellers=bestsellers,
                 
             };
 
