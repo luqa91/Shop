@@ -41,5 +41,21 @@ namespace Shop.Controllers
 
 
 
+
+
+
+        public ActionResult Index2()
+        {
+
+            
+            return View();
+        }
+
+
+
+
+
+
+
     }
 }
