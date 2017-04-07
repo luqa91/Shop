@@ -13,6 +13,8 @@
                 <div class="caption">
                     <h4 class="pull-right">@product.PriceProduct PLN</h4>
                     <h4>
+                        <a href="@Url.Action("BuyNow", "Cart", new { id=product.ProductId})" class="btn btn-primary">Buy Now!</a>
+
                         <a href="@Url.Action("Details", "Products", new { id = product.ProductId })">@product.Title</a>
                     </h4>
                     <p>@product.Company See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
