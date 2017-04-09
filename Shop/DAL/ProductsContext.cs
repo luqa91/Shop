@@ -1,4 +1,5 @@
-﻿using Shop.Models;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Shop.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,9 +9,9 @@ using System.Web;
 
 namespace Shop.DAL
 {
-    public class ProductsContext: DbContext
+    public class ProductsContext: IdentityDbContext<ApplicationUser>
     {
-        public ProductsContext() : base("ProductsContext")
+        public ProductsContext() : base("ProductsContext", throwIfV1Schema: false)
         {
 
         }
@@ -21,7 +22,10 @@ namespace Shop.DAL
             Database.SetInitializer<ProductsContext>(new ProductsInitializer());
 
         }
-
+        public static ProductsContext Create()
+        {
+            return new ProductsContext();
+        }
 
 
 
@@ -41,16 +45,6 @@ namespace Shop.DAL
             base.OnModelCreating(modelBuilder);
 
         }
-
-
-
-
-
-
-
-
-
-
-
+        
     }
 }

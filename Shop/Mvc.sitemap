@@ -11,5 +11,18 @@
       <mvcSiteMapNode title="DataOrder" controller="Cart" action="Buy"/>
         <mvcSiteMapNode title="CheckOrder" controller="Cart" action="Index"/>
   </mvcSiteMapNode>
+    <mvcSiteMapNode title="Konto" controller="Manage" action="Index">
+      <mvcSiteMapNode title="Rejestracja" controller="Account" action="Register"/>
+      <mvcSiteMapNode title="Logowanie" controller="Account" action="Login"/>
+      <mvcSiteMapNode title="Edycja produktu" controller="Manage" action="AddProduct"/>
+      <mvcSiteMapNode title="Twoje Dane" controller="Manage" action="Index"/>
+      <mvcSiteMapNode title="Zamówienia" controller="Manage" action="OrdersList"/>
+
+
+
+    </mvcSiteMapNode>
+    
+    
+    
   </mvcSiteMapNode>
 </mvcSiteMap>

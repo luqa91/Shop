@@ -1,7 +1,50 @@
 ﻿@model IEnumerable<Shop.Models.Product>
 @using Shop.Infrastructure
 <style>
- 
+
+    .thumbnail {
+        overflow: hidden;
+    }
+
+
+
+        .thumbnail img {
+        width: auto;
+        height: 130px;
+        overflow: hidden;
+       position:relative;
+
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        box-shadow: 0 0 1px transparent;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        -webkit-transition-property: box-shadow, transform;
+        transition-property: box-shadow, transform;
+    }
+
+
+
+        .thumbnail img:hover, .thumbnail img:focus, .thumbnail img:active {
+            box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+            overflow: hidden;
+        }
+
+
+
+
+    .caption{
+        height:auto;
+        max-height:150px;
+        overflow: hidden;
+    }
+
+
+
 </style>
 <div class="row">
 
@@ -12,9 +55,9 @@
                 <img src="@Url.PicturesPath(product.NameFileImage)" alt="">
                 <div class="caption">
                     <h4 class="pull-right">@product.PriceProduct PLN</h4>
-                    <h4>
+                    
                         <a href="@Url.Action("BuyNow", "Cart", new { id=product.ProductId})" class="btn btn-primary">Buy Now!</a>
-
+                    <h4>
                         <a href="@Url.Action("Details", "Products", new { id = product.ProductId })">@product.Title</a>
                     </h4>
                     <p>@product.Company See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>

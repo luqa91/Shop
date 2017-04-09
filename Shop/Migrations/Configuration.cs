@@ -10,13 +10,16 @@ namespace Shop.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "Shop.DAL.ProductsContext";
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = false;
+            ContextKey = "Shop.DAL.KursyContext";
+            //   ContextKey = "StronaSklep.DAL.KursyContext";
         }
 
         protected override void Seed(Shop.DAL.ProductsContext context)
         {
             ProductsInitializer.SeedProductsData(context);
+            ProductsInitializer.SeedUzytkownicy(context);
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
