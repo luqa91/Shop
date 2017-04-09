@@ -7,60 +7,60 @@
 
 
 <style>
-       /*!
+    /*!
     * Start Bootstrap - Shop Homepage (http://startbootstrap.com/)
     * Copyright 2013-2016 Start Bootstrap
     * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
     */
 
-       body {
-           padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-       }
+    body {
+        padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
 
-       .slide-image {
-           width: 100%;
-       }
+    .slide-image {
+        width: 100%;
+    }
 
-       .carousel-holder {
-           margin-bottom: 30px;
-       }
+    .carousel-holder {
+        margin-bottom: 30px;
+    }
 
-       .carousel-control,
-       .item {
-           border-radius: 4px;
-       }
+    .carousel-control,
+    .item {
+        border-radius: 4px;
+    }
 
-       .caption {
-           height: 130px;
-           overflow: hidden;
-       }
+    .caption {
+        height: 130px;
+        overflow: hidden;
+    }
 
-           .caption h4 {
-               white-space: nowrap;
-           }
+        .caption h4 {
+            white-space: nowrap;
+        }
 
-       .thumbnail img {
-           width: 100%;
-       }
+    .thumbnail img {
+        width: 100%;
+    }
 
-       .ratings {
-           padding-right: 10px;
-           padding-left: 10px;
-           color: #d17581;
-       }
+    .ratings {
+        padding-right: 10px;
+        padding-left: 10px;
+        color: #d17581;
+    }
 
-       .thumbnail {
-           padding: 0;
-       }
+    .thumbnail {
+        padding: 0;
+    }
 
-           .thumbnail .caption-full {
-               padding: 9px;
-               color: #333;
-           }
+        .thumbnail .caption-full {
+            padding: 9px;
+            color: #333;
+        }
 
-       footer {
-           margin: 50px 0;
-       }
+    footer {
+        margin: 50px 0;
+    }
 
 
 
@@ -111,123 +111,113 @@
         z-index: 3;
     }
 
-
-
-
-
-
-
-
-
-      
 </style>
 
 
-    <!-- Page Content -->
+<!-- Page Content -->
 <div class="container">
-
     <div class="row">
-
 
         @Html.Action("CategoryMenu")
 
-
         <div class="col-md-8">
-
-
-            <div class="container">
-                <div class="row">
-
-
-                    <div id="custom-search-input">
-                        <form id="search-form" method="get" data-ajax="true" data-ajax-target="#SectionList">
-
-                            <div class="input-group col-md-2" style="float: right; left: -350px;">
+       
+            
 
 
 
-                                <input id="search-filter" type="search" name="searchQuery" class="search-query form-control"
-                                       data-autocomplete-source="@Url.Action("ProductsHints")"
-                                       placeholder="Search" />
+            
+
+            <div id="custom-search-input">
+                <form id="search-form" method="get" data-ajax="true" data-ajax-target="#SectionList">
+
+                    <div class="input-group col-md-2" style="float: right; left: -350px;">
 
 
 
-                                <span class="input-group-btn">
-                                    <button class="btn btn-danger" type="submit">
-                                        <span class=" glyphicon glyphicon-search"></span>
-                                    </button>
-                                </span>
-
-                            </div>
-                        </form>
+                        <input id="search-filter" type="search" name="searchQuery" class="search-query form-control"
+                               data-autocomplete-source="@Url.Action("ProductsHints")"
+                               placeholder="Search" />
 
 
 
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="submit">
+                                <span class=" glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
 
                     </div>
-
-                </div>
-
-
-                </div>
-
-
-                    <a href="link">
-                        @Html.MvcSiteMap().SiteMapPath()
-                    </a>
-
-                    <div class="row carousel-holder">
-
-                        <div class="col-md-12">
-                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                                    </div>
-                                    <div class="item">
-                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                                    </div>
-                                    <div class="item">
-                                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                                    </div>
-                                </div>
-                                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                </a>
-                                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div id="SectionList">
-
-                        @Html.Partial("_ProductsList")
-                    </div>
-
-
-                </div>
-
+                </form>
             </div>
         </div>
 
 
 
+        <a href="link">
+            @Html.MvcSiteMap().SiteMapPath()
+        </a>
+
+        <div class="col-md-10">
+
+            <div class="row carousel-holder">
+
+                <div class="col-md-8">
+
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                            </div>
+                            <div class="item">
+                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                            </div>
+                            <div class="item">
+                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                            </div>
+
+                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div id="SectionList">
+
+                @Html.Partial("_ProductsList")
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+
+</div>
 
 
 @section Scripts{
-    
+
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndJqueryUI")
 
 
-<script>
+    <script>
         $(function () {
             var setupAutoComplete = function () {
                 var $input = $(this);
@@ -266,7 +256,7 @@
             $("#search-form").submit(ajaxSubmit);
 
         });
-</script>
+    </script>
 
 
 
@@ -278,7 +268,7 @@
 
 
 
-    }
+}
 
 
 

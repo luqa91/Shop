@@ -232,6 +232,10 @@
     <Compile Include="Migrations\201704090757227_AddIdentity.Designer.cs">
       <DependentUpon>201704090757227_AddIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704091907275_order.cs" />
+    <Compile Include="Migrations\201704091907275_order.Designer.cs">
+      <DependentUpon>201704091907275_order.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -371,6 +375,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Cart\Pay.cshtml" />
+    <Content Include="Views\Cart\ConfirmationOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -400,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704090757227_AddIdentity.resx">
       <DependentUpon>201704090757227_AddIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704091907275_order.resx">
+      <DependentUpon>201704091907275_order.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

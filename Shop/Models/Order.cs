@@ -28,7 +28,13 @@ namespace Shop.Models
         [Required(ErrorMessage = "Wprowadź kod pocztowy")]
         [StringLength(6)]
         public string PostalCode { get; set; }
+
+        [Required(ErrorMessage ="Musisz wprowadzić numer telefonu")]
+        [StringLength(20)]
+        [RegularExpression(@"(\+\d{2})*[\d\s-]+", ErrorMessage ="Błędny format numeru telefonu")]
         public string Phone { get; set; }
+        [Required(ErrorMessage ="Wprowadz swój adres e-mail.")]
+        [EmailAddress(ErrorMessage ="Błędny format adresu e-mail.")]
         public string Email { get; set; }
         public string Comment { get; set; }
         public DateTime DateAdded { get; set; }

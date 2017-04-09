@@ -125,6 +125,7 @@ namespace Shop.Infrastructure
             return newOrder;
 
         }
+
         public void EmptyCart()
         {
             session.Set<List<PositionCart>>(Consts.CartSessionKey, null);
