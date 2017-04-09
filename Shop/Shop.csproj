@@ -238,7 +238,6 @@
       <DependentUpon>201704091907275_order.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DataUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />

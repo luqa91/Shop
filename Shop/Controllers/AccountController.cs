@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Shop.Models;
+using Shop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

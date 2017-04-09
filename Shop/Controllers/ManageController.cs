@@ -16,8 +16,6 @@ namespace Shop.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-
-
             public enum ManageMessageId
             {
                 ChangePasswordSuccess,
