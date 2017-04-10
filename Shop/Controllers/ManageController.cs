@@ -2,9 +2,13 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Shop.DAL;
+using Shop.Infrastructure;
 using Shop.Models;
+using Shop.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -22,6 +26,7 @@ namespace Shop.Controllers
                 Error
             }
 
+            private ProductsContext db = new ProductsContext();
 
             private ApplicationUserManager _userManager;
             public ApplicationUserManager UserManager
@@ -145,6 +150,142 @@ namespace Shop.Controllers
             }
         
 
+        public ActionResult OrderList ()
+        {
+            bool isAdmin = User.IsInRole("Admin");
+            ViewBag.UserIsAdmin = isAdmin;
+
+            IEnumerable<Order> OrderListUsers;
+
+            //Dla administratora szwracamy wszystkie zamówienia
+            if(isAdmin)
+            {
+                OrderListUsers = db.Orders.Include("PositionOrder").OrderByDescending(o => o.DateAdded).ToArray();
+
+            }
+            else
+            {
+                var userId = User.Identity.GetUserId();
+                OrderListUsers = db.Orders.Where(o=>o.UserId==userId).Include("PositionOrder").OrderByDescending(o => o.DateAdded).ToArray();
+            }
+            return View(OrderListUsers);
+            
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public StatusOrder ChangeStatusOrder(Order order)
+        {
+            Order ordertomodification = db.Orders.Find(order.OrderId);
+            ordertomodification.StatusOrder = order.StatusOrder;
+            db.SaveChanges();
+            return order.StatusOrder;
 
         }
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddProduct(int? productId, bool? confirmation)
+        {
+            Product product;
+            if (productId.HasValue)
+            {
+                ViewBag.EditMode = true;
+                product = db.Products.Find(productId);
+            }
+            else
+            {
+                ViewBag.EditMode = false;
+                product = new Product();
+            }
+
+            var result = new EditProductViewModel();
+            result.Category = db.Categories.ToList();
+            result.Product = product;
+            result.Confirmation = confirmation;
+
+            return View(result);
+
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddProduct(EditProductViewModel model, HttpPostedFileBase file)
+        {
+            if (model.Product.ProductId > 0)
+            {
+                // modyfikacja kursu
+                db.Entry(model.Product).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("AddProduct", new { confirmation = true });
+            }
+            else
+            {
+                // Sprawdzenie, czy użytkownik wybrał plik
+                if (file != null && file.ContentLength > 0)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        // Generowanie pliku
+                        var fileExt = Path.GetExtension(file.FileName);
+                        var filename = Guid.NewGuid() + fileExt;
+
+                        var path = Path.Combine(Server.MapPath(AppConfig.PicturesFolderRelative), filename);
+                        file.SaveAs(path);
+
+                        model.Product.NameFileImage = filename;
+                        model.Product.DateAdded = DateTime.Now;
+
+                        db.Entry(model.Product).State = EntityState.Added;
+                        db.SaveChanges();
+
+                        return RedirectToAction("AddProduct", new { confirmation = true });
+                    }
+                    else
+                    {
+                        var category = db.Categories.ToList();
+                        model.Category = category;
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie wskazano pliku");
+                    var categories = db.Categories.ToList();
+                    model.Category = categories;
+                    return View(model);
+                }
+            }
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult HideProduct(int productId)
+        {
+            var album = db.Products.Find(productId);
+            album.Hidden = true;
+            db.SaveChanges();
+
+
+            return RedirectToAction("AddProduct", new { confirmation = true });
+
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult ShowProduct(int productId)
+        {
+            var album = db.Products.Find(productId);
+            album.Hidden = false;
+            db.SaveChanges();
+
+
+            return RedirectToAction("AddProduct", new { confirmation = true });
+
+        }
+
+
+
+
+
     }
+}

@@ -31,10 +31,10 @@
                     </div>
 
                     <div class="form-group row">
-                        @Html.LabelFor(o => o.DataUser.Forname, "Nazwisko:", new { @class = "col-md-3 control-label" })
+                        @Html.LabelFor(o => o.DataUser.Lastname, "Nazwisko:", new { @class = "col-md-3 control-label" })
                         <div class="col-md-9">
-                            @Html.TextBoxFor(m => m.DataUser.Forname, new { @class = "form-control", id = "login-userforname", type = "text", name = "userforname", value = "", placeholder = "forname" })
-                            @Html.ValidationMessageFor(o => o.DataUser.Forname)
+                            @Html.TextBoxFor(m => m.DataUser.Lastname, new { @class = "form-control", id = "login-userforname", type = "text", name = "userforname", value = "", placeholder = "Lastname" })
+                            @Html.ValidationMessageFor(o => o.DataUser.Lastname)
                         </div>
                     </div>
 

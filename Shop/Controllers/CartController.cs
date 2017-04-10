@@ -91,7 +91,7 @@ namespace Shop.Controllers
                 var order = new Order
                 {
                     Name = user.DataUser.Name,
-                    LastName = user.DataUser.Forname,
+                    LastName = user.DataUser.Lastname,
                     Address = user.DataUser.Adress,
                     City = user.DataUser.City,
                     PostalCode = user.DataUser.PostCode,

@@ -22,6 +22,11 @@
                                 @Model.Title Portfolio Item
                                 <small>@Model.Company @string.Format("{0:.##}", Model.PriceProduct)<span>PLN</span></small>
                             </h1>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a href="@Url.Action("AddProduct", "Manage", new { productid = Model.ProductId })" style="margin-top: 20px; font-weight: bold; display: block;">Edytuj</a>
+
+                            }
                         </div>
                     </div>
                     <!-- /.row -->

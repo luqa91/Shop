@@ -11,7 +11,7 @@ namespace Shop.Models
 
             public string Name { get; set; }
 
-            public string Forname { get; set; }
+            public string Lastname { get; set; }
 
             public string Adress { get; set; }
 

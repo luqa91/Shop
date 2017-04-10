@@ -1,0 +1,157 @@
+﻿@model Shop.ViewModels.EditProductViewModel
+
+@{
+    ViewBag.Title = "Dodaj Kurs";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+
+
+<h2>Edycja produktu</h2>
+
+<div class="container">
+
+    @if (Model.Confirmation.HasValue && Model.Confirmation.Value)
+    {
+        <div id="w">
+            <div id="content">
+                <!-- Icons source http://dribbble.com/shots/913555-Flat-Web-Elements -->
+                <div class="notify successbox">
+                    <h1>Success!</h1>
+                    <span class="alerticon"><img src="http://s22.postimg.org/i5iji9hv1/check.png" alt="checkmark" /></span>
+                    <p>Thanks so much for your new added product. </p>
+                </div>
+            </div><!-- end #content -->
+        </div><!-- end #w -->
+
+    }
+
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+        <div class="panel panel-info">
+
+            <div style="padding-top:20px" class="panel-body">
+                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+
+
+                @using (Html.BeginForm("AddProduct", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="error-summary-centered">
+                        @Html.ValidationSummary()
+                    </div>
+                    @Html.HiddenFor(o => o.Product.ProductId);
+                    @Html.HiddenFor(o => o.Product.DateAdded);
+                    @Html.HiddenFor(o => o.Product.NameFileImage);
+
+                    <div class="form-group row">
+                        @Html.LabelFor(o => o.Product.Company, "Firma produktu:", new { @class = "col-md-3 control-label" })
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.Product.Company, new { @class = "form-control", id = "login-username", type = "text", name = "username", value = "", placeholder = "Firma produktu" })
+                            @Html.ValidationMessageFor(o => o.Product.Company)
+                        </div>
+                    </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(o => o.Product.Title, "Tytuł produktu:", new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.Product.Title, new { @class = "form-control", id = "login-username", type = "text", name = "username", value = "", placeholder = "Tytuł productu" })
+                                        @Html.ValidationMessageFor(o => o.Product.Title)
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(o => o.Product.Description, "Opis produktu:", new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.Product.Description, new { @class = "form-control", id = "login-username", type = "text", name = "username", value = "", placeholder = "Opis produktu" })
+                                        @Html.ValidationMessageFor(o => o.Product.Description)
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(o => o.Product.ShortDescription, "Opis skrócony:", new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.Product.ShortDescription, new { @class = "form-control", id = "login-username", type = "text", name = "username", value = "", placeholder = "Opis skrócony" })
+                                        @Html.ValidationMessageFor(o => o.Product.ShortDescription)
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(o => o.Category, "Kategoria:", new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(m => m.Product.CategoryId, new SelectList(Model.Category, "CategoryId", "NameCategory", Model.Category.First().CategoryId))
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(o => o.Product.PriceProduct, "Cena produktu:", new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(m => m.Product.PriceProduct, new { @class = "form-control", id = "login-username", type = "text", name = "username", value = "", placeholder = "Cena" })
+                                        @Html.ValidationMessageFor(o => o.Product.PriceProduct)
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    @Html.LabelFor(o => o.Product.Bestseller, "Bestseller:", new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-9">
+                                        @Html.CheckBoxFor(m => m.Product.Bestseller)
+                                    </div>
+                                </div>
+
+                    if (ViewBag.EditMode == null || !ViewBag.EditMode)
+                    {
+                        <div class="form-group row">
+
+                            <div class="upload col-md-9">
+                                <input type="file" name="file" />
+                            </div>
+
+                        </div>
+                    }
+
+
+
+
+
+
+
+                    <div style="margin-top:10px" class="form-group">
+
+                        @if (ViewBag.EditMode)
+                        {
+                            if (Model.Product.Hidden)
+                            {
+
+                                <a href="@Url.Action("ShowProduct", "Manage", new { productId = Model.Product.ProductId })">
+                                    Przywróć
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("HideProduct", "Manage", new { productId = Model.Product.ProductId })" style="display: block; margin-top: 15px; font-weight: bold;">
+                                    Usuń
+                                </a>
+                            }
+                        }
+                    </div>
+
+
+
+
+
+
+                        <div style="margin-top:10px" class="form-group">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <input type="submit" id="btn-login" class="btn btn-success" value="Dodaj" />
+                            </div>
+                        </div>
+
+                        }
+
+
+                                 </div>
+        </div>
+    </div>
+</div>
