@@ -11,7 +11,7 @@ namespace Shop.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = false;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "Shop.DAL.KursyContext";
             //   ContextKey = "StronaSklep.DAL.KursyContext";
         }

@@ -1,0 +1,3 @@
+2017-04-11 22:53:56.1756|INFO|Shop.Controllers.HomeController|Jestes na stronie g³ównej
+2017-04-11 22:54:14.1485|INFO|Shop.Controllers.HomeController|Jestes na stronie g³ównej
+2017-04-11 22:54:43.8600|INFO|Shop.Controllers.HomeController|Jestes na stronie g³ównej

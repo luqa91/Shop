@@ -1,4 +1,5 @@
 ﻿using MvcSiteMapProvider.Caching;
+using NLog;
 using Shop.DAL;
 using Shop.Infrastructure;
 using Shop.Models;
@@ -14,9 +15,10 @@ namespace Shop.Controllers
     public class HomeController : Controller
     {
         private ProductsContext db = new ProductsContext();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public ActionResult Index()
         {
-            
+            logger.Info("Jestes na stronie głównej");
 
             ICacheProvider cache = new DefaultCacheProvider();
 
