@@ -124,6 +124,15 @@ namespace Shop.Controllers
                 cartManager.EmptyCart();
 
 
+                var order = db.Orders.Include("PositionOrder").Include("PositionOrder.Product").SingleOrDefault(o => o.OrderId == newOrder.OrderId);
+                ConfirmationOrderEmail email = new ConfirmationOrderEmail();
+                email.To = order.Email;
+                email.From = "Kaczmareek.lukasz@gmail.com";
+                email.Value = order.ValueOrder;
+                email.NumberOrder = order.OrderId;
+                email.PositionOrder = order.PositionOrder;
+               await email.SendAsync();
+
 
 
                 return RedirectToAction("ConfirmationOrder");

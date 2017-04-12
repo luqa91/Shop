@@ -1,0 +1,28 @@
+﻿@model Shop.ViewModels.ConfirmationOrderEmail
+Content-Type: text/plain; charset=utf-8
+
+Dziękujemy!
+
+Złożyłeś zamówienie w serwisie praktyczne kursy.
+Zamówione pozycje :
+
+@{
+    IEnumerable<Shop.Models.PositionOrder> positionOrder = Model.PositionOrder;
+
+    for (int i = 0; i < positionOrder.Count(); i++)
+    {
+        @positionOrder.ElementAt(i).product.Title
+    }
+}
+
+Prosimy o przelanie kwoty @Model.Value zł, tytułem: zamówienie nr @Model.NumberOrder na nasze konto bankowe:
+
+Praktyczne kursy Sp. z o.o
+ul. Piekna 12/4
+40-467 Opole
+PKO BP 10 0000 0000 0000 0000 0000
+
+Zaraz po otrzymaniu środków uzyskasz pełny dostęp do kursu
+
+Dziękujemy i zapraszamy ponownie!
+PraktyczneKursy.pl

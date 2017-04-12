@@ -1,5 +1,6 @@
 ﻿using MvcSiteMapProvider.Caching;
 using NLog;
+using NLog.Fluent;
 using Shop.DAL;
 using Shop.Infrastructure;
 using Shop.Models;
@@ -18,7 +19,11 @@ namespace Shop.Controllers
         private static Logger logger = LogManager.GetCurrentClassLogger();
         public ActionResult Index()
         {
-            logger.Info("Jestes na stronie głównej");
+            
+            Log.Warn("This is a warning message");
+            Log.Error("This is an error message");
+            
+            Log.Info("Jestes na stronie głównej");
 
             ICacheProvider cache = new DefaultCacheProvider();
 
