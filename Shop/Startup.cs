@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using Hangfire;
+using Microsoft.Owin;
 using Owin;
 
 
@@ -11,8 +12,16 @@ namespace Shop
     {
         public void Configuration(IAppBuilder app)
         {
+
+
             ConfigureAuth(app);
+            GlobalConfiguration.Configuration.UseSqlServerStorage("ProductsContext");
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+ 
 
         }
+
+
     }
 }

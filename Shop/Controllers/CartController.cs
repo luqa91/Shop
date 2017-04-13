@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Hangfire;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Shop.DAL;
 using Shop.Infrastructure;
 using Shop.Models;
 using Shop.ViewModels;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -124,16 +126,11 @@ namespace Shop.Controllers
                 cartManager.EmptyCart();
 
 
-                var order = db.Orders.Include("PositionOrder").Include("PositionOrder.Product").SingleOrDefault(o => o.OrderId == newOrder.OrderId);
-                ConfirmationOrderEmail email = new ConfirmationOrderEmail();
-                email.To = order.Email;
-                email.From = "Kaczmareek.lukasz@gmail.com";
-                email.Value = order.ValueOrder;
-                email.NumberOrder = order.OrderId;
-                email.PositionOrder = order.PositionOrder;
-               await email.SendAsync();
 
+                string url = Url.Action("ConfirmationOrderEmail", "Cart", new { orderId = newOrder.OrderId, lastname= newOrder.LastName },Request.Url.Scheme);
+                BackgroundJob.Enqueue(() => Call(url));
 
+                
 
                 return RedirectToAction("ConfirmationOrder");
             }
@@ -141,6 +138,33 @@ namespace Shop.Controllers
                 return View(orderDetails);
 
         }
+
+        public void Call (string url)
+        {
+            var req = HttpWebRequest.Create(url);
+            req.GetResponseAsync();
+        }
+        public async Task<ActionResult> ConfirmationOrderEmail(int orderId, string lastname)
+        {
+            var order = db.Orders.Include("PositionOrder").Include("PositionOrder.Product")
+                .SingleOrDefault(o => o.OrderId == orderId && o.LastName == lastname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            ConfirmationOrderEmail email = new ConfirmationOrderEmail();
+            email.To = order.Email;
+            email.From = "Kaczmareek.lukasz@gmail.com";
+            email.Value = order.ValueOrder;
+            email.NumberOrder = order.OrderId;
+            email.PositionOrder = order.PositionOrder;
+            await email.SendAsync();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+
+        }
+
+
+
+
         public ActionResult ConfirmationOrder()
         {
             var name = User.Identity.Name;
