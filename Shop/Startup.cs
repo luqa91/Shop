@@ -1,4 +1,5 @@
 ﻿using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
 
@@ -15,10 +16,10 @@ namespace Shop
 
 
             ConfigureAuth(app);
-            GlobalConfiguration.Configuration.UseSqlServerStorage("ProductsContext");
+            JobStorage.Current = new SqlServerStorage("ProductsContext");
             app.UseHangfireDashboard();
             app.UseHangfireServer();
- 
+            app.MapSignalR();
 
         }
 

@@ -19,14 +19,14 @@ namespace Shop.Controllers
         private CartManager cartManager;
         private ISessionManager sessionManager { get; set; }
         private ProductsContext db;
+        private IMailService mailService;
 
-
-        public CartController()
+        public CartController(IMailService mailService)
         {
 
 
             this.db = new ProductsContext();
-
+            this.mailService = mailService; 
             //  this.mailService = mailService;
             this.sessionManager = new SessionManager();
             this.cartManager = new CartManager(sessionManager, db);
@@ -124,13 +124,12 @@ namespace Shop.Controllers
 
                 //opróżnimy nasz koszyk zakupów
                 cartManager.EmptyCart();
-
-
-
-                string url = Url.Action("ConfirmationOrderEmail", "Cart", new { orderId = newOrder.OrderId, lastname= newOrder.LastName },Request.Url.Scheme);
-                BackgroundJob.Enqueue(() => Call(url));
-
                 
+                mailService.SendingConfirmationOrdersEmail(newOrder);
+
+
+
+
 
                 return RedirectToAction("ConfirmationOrder");
             }
@@ -138,31 +137,6 @@ namespace Shop.Controllers
                 return View(orderDetails);
 
         }
-
-        public void Call (string url)
-        {
-            var req = HttpWebRequest.Create(url);
-            req.GetResponseAsync();
-        }
-        public async Task<ActionResult> ConfirmationOrderEmail(int orderId, string lastname)
-        {
-            var order = db.Orders.Include("PositionOrder").Include("PositionOrder.Product")
-                .SingleOrDefault(o => o.OrderId == orderId && o.LastName == lastname);
-
-            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-
-            ConfirmationOrderEmail email = new ConfirmationOrderEmail();
-            email.To = order.Email;
-            email.From = "Kaczmareek.lukasz@gmail.com";
-            email.Value = order.ValueOrder;
-            email.NumberOrder = order.OrderId;
-            email.PositionOrder = order.PositionOrder;
-            await email.SendAsync();
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-
-        }
-
-
 
 
         public ActionResult ConfirmationOrder()

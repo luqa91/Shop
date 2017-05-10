@@ -1,6 +1,7 @@
 ﻿using MvcSiteMapProvider.Caching;
 using NLog;
 using NLog.Fluent;
+using Shop.App_Start;
 using Shop.DAL;
 using Shop.Infrastructure;
 using Shop.Models;
@@ -17,10 +18,20 @@ namespace Shop.Controllers
     {
         private ProductsContext db = new ProductsContext();
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        public ActionResult Index()
+
+
+        [HandleError(View="Error", ExceptionType =typeof(StackOverflowException))]
+        [MyLoggingFilter]
+        public ActionResult Index(bool notifyUsers = false)
         {
-            
-            Log.Warn("This is a warning message");
+
+
+
+
+
+            ViewBag.NotifyUsers = notifyUsers;
+
+            logger.Warn("This is a warning message");
             Log.Error("This is an error message");
             
             Log.Info("Jestes na stronie głównej");

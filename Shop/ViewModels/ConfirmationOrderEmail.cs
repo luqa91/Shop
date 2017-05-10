@@ -19,8 +19,15 @@ namespace Shop.ViewModels
 
     public class OrderRealizedEmail : Email
     {
+
         public string To { get; set; }
         public string From { get; set; }
         public int NumberOrder { get; set; }
+
     }
+
+
+
+    
+
 }

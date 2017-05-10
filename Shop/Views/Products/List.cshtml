@@ -43,15 +43,7 @@
         width: 100%;
     }
 
-    .ratings {
-        padding-right: 10px;
-        padding-left: 10px;
-        color: #d17581;
-    }
 
-    .thumbnail {
-        padding: 0;
-    }
 
         .thumbnail .caption-full {
             padding: 9px;
@@ -73,43 +65,7 @@
     /*!
     * SEARCH style
     */
-    #custom-search-input {
-        margin: 0;
-        margin-top: 10px;
-        padding: 0;
-    }
 
-        #custom-search-input .search-query {
-            padding-right: 3px;
-            padding-right: 4px \9;
-            padding-left: 3px;
-            padding-left: 4px \9;
-            /* IE7-8 doesn't have border-radius, so don't indent the padding */
-            margin-bottom: 0;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-        }
-
-        #custom-search-input button {
-            border: 0;
-            background: none;
-            /** belows styles are working good */
-            padding: 2px 5px;
-            margin-top: 2px;
-            position: relative;
-            left: 0px;
-            /* IE7-8 doesn't have border-radius, so don't indent the padding */
-            margin-bottom: 0;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-            color: #D9230F;
-        }
-
-    .search-query:focus + button {
-        z-index: 3;
-    }
 
 </style>
 
@@ -117,21 +73,20 @@
 <!-- Page Content -->
 <div class="container">
     <div class="row">
+        <div class="col-md-3">
 
-        @Html.Action("CategoryMenu")
+            <a href="link">
+                @Html.MvcSiteMap().SiteMapPath()
+            </a>
+            <br />
+            <br />
 
-        <div class="col-md-8">
-       
-            
-
-
-
-            
+            @Html.Action("CategoryMenu")
 
             <div id="custom-search-input">
                 <form id="search-form" method="get" data-ajax="true" data-ajax-target="#SectionList">
 
-                    <div class="input-group col-md-2" style="float: right; left: -350px;">
+                    <div class="input-group col-md-2" style="float: right; width:auto;">
 
 
 
@@ -150,19 +105,14 @@
                     </div>
                 </form>
             </div>
+
         </div>
 
-
-
-        <a href="link">
-            @Html.MvcSiteMap().SiteMapPath()
-        </a>
-
-        <div class="col-md-10">
-
+        <div class="col-md-9">
+       
             <div class="row carousel-holder">
 
-                <div class="col-md-8">
+                <div class="col-md-12">
 
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
@@ -196,10 +146,17 @@
 
 
 
-            <div id="SectionList">
 
-                @Html.Partial("_ProductsList")
+            <div class="row">
+                    <div id="SectionList">
+
+                        @Html.Partial("_ProductsList")
+                    </div>
+
             </div>
+
+
+
 
 
 

@@ -10,114 +10,123 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-md-3">
+
+            <a href="link">
+                @Html.MvcSiteMap().SiteMapPath()
+            </a>
+            <br />
+            <br />
 
 
-                @Html.Action("CategoryMenu", "Products")
+            @Html.Action("CategoryMenu", "Products")
+        </div>
+
+            <div class="col-md-9">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Total</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
 
-                <div class="col-sm-12 col-md-8 col-md-offset-1">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th class="text-center">Price</th>
-                                <th class="text-center">Total</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-
-                            @foreach (var positionCart in Model.PositionCart)
-                            {
-                                <tr id="cart-row-@positionCart.Product.ProductId">
-                                    <td class="col-sm-8 col-md-6">
-                                        <div class="media">
-                                            <a class="thumbnail pull-left" href="@Url.Action("Details", "Products", new { id = positionCart.Product.ProductId })"> 
-                                            <img class="media-object" src="@Url.Content("~/Content/Products/" + positionCart.Product.NameFileImage)" style="width: 72px; height: 72px;"> </a>
-                                            <div class="media-body">
-                                                <h4 class="media-heading"><a href="@Url.Action("Details", "Products", new { id = positionCart.Product.ProductId })">@positionCart.Product.Title</a></h4>
-                                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
-                                            </div>
+                        @foreach (var positionCart in Model.PositionCart)
+                        {
+                            <tr id="cart-row-@positionCart.Product.ProductId">
+                                <td class="col-md-9">
+                                    <div class="media">
+                                        <a class="thumbnail pull-left" href="@Url.Action("Details", "Products", new { id = positionCart.Product.ProductId })">
+                                            <img class="media-object" src="@Url.Content("~/Content/Products/" + positionCart.Product.NameFileImage)" style="width: 72px; height: 72px;">
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="@Url.Action("Details", "Products", new { id = positionCart.Product.ProductId })">@positionCart.Product.Title</a></h4>
+                                            <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                            <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
                                         </div>
-                                    </td>
-                                    <td class="col-sm-1 col-md-1" style="text-align: center">
-                                        <input id="cart-quantity-position-@positionCart.Product.ProductId" type="email" class="form-control"  value="@positionCart.Quantity">
-                                    </td>
-
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>@String.Format("{0:0.##}", positionCart.Value) zł</strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>@String.Format("{0:0.##}", positionCart.Value*positionCart.Quantity) zł</strong></td>
-                                    <td class="col-sm-1 col-md-1">
-
-                                        <button class="btn btn-danger deleteProduct" a data-id="@positionCart.Product.ProductId">
-                                            <span class="glyphicon glyphicon-remove"></span> Remove
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-
-                            <tr id="cart-empty=message" @if (Model.PositionCart != null && Model.PositionCart.Count > 0) { <text>class="hidden"</text>}>
-                                <td class="col-sm-8 col-md-6">Twój koszyk jest pusty. Możechcesz coś dodać do koszyka ?</td>
-                            </tr>
-
-
-
-
-
-                            <tr>
-                                <td>   </td>
-                                <td>   </td>
-                                <td>   </td>
-                                <td><h5>Subtotal</h5></td>
-                                <td class="text-right"><h5><strong><span id="total-price-value">@String.Format("{0:0,##}", Model.PriceTotal) </span></strong></h5></td>
-                            </tr>
-                            <tr>
-                                <td>   </td>
-                                <td>   </td>
-                                <td>   </td>
-                                <td><h5>Estimated shipping</h5></td>
-                                <td class="text-right"><h5><strong>$6.94</strong></h5></td>
-                            </tr>
-                            <tr>
-                                <td>   </td>
-                                <td>   </td>
-                                <td>   </td>
-                                <td><h3>Total</h3></td>
-                                <td class="text-right"><h3><strong><span id="total-price-value">@String.Format("{0:0,##}",Model.PriceTotal) </span></strong></h3></td>
-                            </tr>
-                            <tr>
-                                <td>   </td>
-                                <td>   </td>
-                                <td>   </td>
-                                <td>
-                                    <button type="button" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                                    </button>
+                                    </div>
+                                </td>
+                                <td class="col-sm-1 col-md-1" style="text-align: center">
+                                    <input id="cart-quantity-position-@positionCart.Product.ProductId" type="email" class="form-control" value="@positionCart.Quantity">
                                 </td>
 
-                                                                @if (Model.PriceTotal > 0)
-                                                                {
-                                                                    <td>
- <a id="cart-button-checkout" href="@Url.Action("Pay", "Cart")" class="btn btn-success">Checkout <i class="fa fa-angle-right glyphicon glyphicon-play"></i></a>
-                                                                    
-                                                                    </td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>@String.Format("{0:0.##}", positionCart.Value) zł</strong></td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>@String.Format("{0:0.##}", positionCart.Value * positionCart.Quantity) zł</strong></td>
+                                <td class="col-sm-1 col-md-1">
 
-
-
-
-
-                                                                }
-
-
-
-
+                                    <button class="btn btn-danger deleteProduct" a data-id="@positionCart.Product.ProductId">
+                                        <span class="glyphicon glyphicon-remove"></span> Remove
+                                    </button>
+                                </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        }
+
+                        <tr id="cart-empty=message" @if (Model.PositionCart != null && Model.PositionCart.Count > 0) { <text> class="hidden" </text> }>
+                            <td class="col-sm-8 col-md-6">Twój koszyk jest pusty. Możechcesz coś dodać do koszyka ?</td>
+                        </tr>
+
+
+
+
+
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>   </td>
+                            <td><h5>Subtotal</h5></td>
+                            <td class="text-right"><h5><strong><span id="total-price-value">@String.Format("{0:0,##}", Model.PriceTotal) </span></strong></h5></td>
+                        </tr>
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>   </td>
+                            <td><h5>Estimated shipping</h5></td>
+                            <td class="text-right"><h5><strong>$6.94</strong></h5></td>
+                        </tr>
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>   </td>
+                            <td><h3>Total</h3></td>
+                            <td class="text-right"><h3><strong><span id="total-price-value">@String.Format("{0:0,##}", Model.PriceTotal) </span></strong></h3></td>
+                        </tr>
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>   </td>
+                            <td>
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                                </button>
+                            </td>
+
+                            @if (Model.PriceTotal > 0)
+                            {
+                                <td>
+                                    <a id="cart-button-checkout" href="@Url.Action("Pay", "Cart")" class="btn btn-success">Checkout <i class="fa fa-angle-right glyphicon glyphicon-play"></i></a>
+
+                                </td>
+
+
+
+
+
+                            }
+
+
+
+
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
+
         </div>
 
 @section Scripts{

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -27,8 +28,16 @@ namespace Shop.Controllers
             }
 
             private ProductsContext db = new ProductsContext();
-
+        private IMailService mailService;
             private ApplicationUserManager _userManager;
+
+
+        public ManageController(IMailService mailService)
+        {
+            this.mailService = mailService;
+        }
+
+
             public ApplicationUserManager UserManager
             {
                 get
@@ -55,7 +64,10 @@ namespace Shop.Controllers
             // GET: /Manage/Index
             public async Task<ActionResult> Index(ManageMessageId? message)
             {
-                if (TempData["ViewData"] != null)
+
+
+
+            if (TempData["ViewData"] != null)
                 {
                     ViewData = (ViewDataDictionary)TempData["ViewData"];
                 }
@@ -180,9 +192,64 @@ namespace Shop.Controllers
             Order ordertomodification = db.Orders.Find(order.OrderId);
             ordertomodification.StatusOrder = order.StatusOrder;
             db.SaveChanges();
+
+            if (ordertomodification.StatusOrder == StatusOrder.Realized)
+            {
+                this.mailService.SendingOrdersRealizedEmail(ordertomodification);
+            }
+
+
             return order.StatusOrder;
 
         }
+
+
+
+
+
+
+        [AllowAnonymous]
+        public ActionResult SendingConfirmationOrdersEmail(int orderId, string lastname)
+        {
+            var order = db.Orders.Include("PositionOrder").Include("PositionOrder.Product")
+                               .SingleOrDefault(o => o.OrderId == orderId && o.LastName == lastname);
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            ConfirmationOrderEmail email = new ConfirmationOrderEmail();
+            email.To = order.Email;
+            email.From = "Kaczmareek.lukasz@gmail.com";
+            email.Value = order.ValueOrder;
+            email.NumberOrder = order.OrderId;
+            email.PositionOrder = order.PositionOrder;
+            email.PathImage = AppConfig.PicturesFolderRelative;
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [AllowAnonymous]
+        public ActionResult SendingOrdersRealizedEmail(int orderId, string lastname)
+        {
+            var order = db.Orders.Include("PositionOrder").Include("PositionOrder.Product")
+                   .SingleOrDefault(o => o.OrderId == orderId && o.LastName == lastname);
+
+
+            if (order == null) return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            OrderRealizedEmail email = new OrderRealizedEmail();
+            email.To = order.Email;
+            email.From = "Kaczmareek.lukasz@gmail.com";
+            email.NumberOrder = order.OrderId;
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+
+
+
+
 
 
         [Authorize(Roles = "Admin")]
@@ -240,7 +307,10 @@ namespace Shop.Controllers
                         db.Entry(model.Product).State = EntityState.Added;
                         db.SaveChanges();
 
-                        return RedirectToAction("AddProduct", new { confirmation = true });
+                       
+
+
+                        return RedirectToAction("AddProduct", new { confirmation = true, notifyUsers=true});
                     }
                     else
                     {
@@ -271,6 +341,8 @@ namespace Shop.Controllers
             return RedirectToAction("AddProduct", new { confirmation = true });
 
         }
+
+
         [Authorize(Roles = "Admin")]
         public ActionResult ShowProduct(int productId)
         {

@@ -16,3 +16,82 @@
     <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
     <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
 </address>
+
+
+
+<h2>Live help</h2>
+Username: @Html.TextBox("username",null, new {@class="form-control" } )
+Message: @Html.TextBox("message", null, new { @class = "form-control" })
+<input type="button" id="send" class="btn btn-success" value="send"/>
+<ul id="liveHelp"></ul>
+
+
+
+
+
+@section scripts {
+    
+<script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+    <script>
+
+        var liveHelp = $.connection.liveHelpHub;
+        liveHelp.client.showMessage = function (username, message) {
+            $('#liveHelp').append('<li>' + username + ':' + message + '</li>');
+
+        };
+        $.connection.hub.start().done(function () {
+            $("#send").click(function () {
+                liveHelp.server.sendMessage($('#username').val(), $('#message').val()
+                );
+                $("#message").val('');
+            });
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        var simple = $.connection.simpleHub;
+        simple.client.introduce = function (introduction) {
+            alert(introduction);
+        };
+        $.connection.hub.start().done(function () {
+            simple.server.hello();
+        });
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+    }

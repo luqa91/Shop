@@ -110,19 +110,12 @@
                         </div>
                     }
 
-
-
-
-
-
-
+                    
                     <div style="margin-top:10px" class="form-group">
-
-                        @if (ViewBag.EditMode)
+                        @if (ViewBag.EditMode == true)
                         {
                             if (Model.Product.Hidden)
                             {
-
                                 <a href="@Url.Action("ShowProduct", "Manage", new { productId = Model.Product.ProductId })">
                                     Przywróć
                                 </a>
@@ -155,3 +148,4 @@
         </div>
     </div>
 </div>
+

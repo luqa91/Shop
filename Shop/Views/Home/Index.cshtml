@@ -24,6 +24,9 @@
        Add Text Animation: https://daneden.github.io/animate.css/
        -->
 
+
+
+
 <div id="bootstrap-touch-slider" class="carousel bs-slider fade  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="7000">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -61,7 +64,7 @@
                     </div>
                 </div>
         <!-- End of Slide -->
-                }
+            }
         }
     </div><!-- End of Wrapper For Slides -->
 
@@ -94,29 +97,66 @@
 
 
 
-    @foreach (var bestseller in Model.Bestsellers)
-    {
-        <div class="content-section-a">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5 col-sm-6">
-                        <hr class="section-heading-spacer">
-                        <div class="clearfix"></div>
-                        <h2 class="section-heading">@bestseller.Title <br>Special Thanks</h2>
-                        <p class="lead">@bestseller.ShortDescription A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> for providing the photographs that you see in this template. Visit their website to become a member.</p>
+    @{ int count = 0;
 
-                        <a href="@Url.Action("BuyNow", "Cart", new { id=bestseller.ProductId})" class="btn btn-primary">Buy Now!</a>
-                        <a href="@Url.Action("Details", "Products" , new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
-                    </div>
-                    <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                        <img src="@Url.PicturesPath(bestseller.NameFileImage)" class="img-responsive" style="padding-top: 40px">
+
+
+        foreach (var bestseller in Model.Bestsellers)
+        {
+
+            if (count % 2 == 0)
+            {
+            <div class="content-section-a">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 col-sm-6">
+                            <hr class="section-heading-spacer">
+                            <div class="clearfix"></div>
+                            <h2 class="section-heading">@bestseller.Title <br>Special Thanks</h2>
+                            <p class="lead">@bestseller.ShortDescription A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> for providing the photographs that you see in this template. Visit their website to become a member.</p>
+
+                            <a href="@Url.Action("BuyNow", "Cart", new { id = bestseller.ProductId })" class="btn btn-primary">Buy Now!</a>
+                            <a href="@Url.Action("Details", "Products", new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
+                        </div>
+                        <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                            <img src="@Url.PicturesPath(bestseller.NameFileImage)" class="img-responsive" style="padding-top: 40px">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            }
+            else
+            {
+                <div class="content-section-b">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                                <hr class="section-heading-spacer">
+                                <div class="clearfix"></div>
+                                <h2 class="section-heading">@bestseller.Title <br>Special Thanks</h2>
+                                <p class="lead">@bestseller.ShortDescription A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> for providing the photographs that you see in this template. Visit their website to become a member.</p>
+
+                                <a href="@Url.Action("BuyNow", "Cart", new { id = bestseller.ProductId })" class="btn btn-primary">Buy Now!</a>
+                                <a href="@Url.Action("Details", "Products", new { id = bestseller.ProductId })" class="btn btn-default">More Info</a>
+                            </div>
+                            <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                                <img src="@Url.PicturesPath(bestseller.NameFileImage)" class="img-responsive" style="padding-top: 40px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+
+
+
+            count++;
+
+
+        }
     }
-
 <!-- /.content-section-a 
 
                     <div class="col-md-6">
@@ -171,3 +211,40 @@
 
         </div>
     </div>
+
+
+
+
+
+
+@section scripts {
+
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+    var notify = $.connection.notifyHub;
+    notify.client.showNotification = function (message) {
+        alert(message);
+    };
+    $.connection.hub.start().done(function () {
+        @{
+
+
+
+            if (ViewBag.NotifyUsers)
+            {
+                <text>
+        notify.server.sendNotification("Notice: a new product has just been added");
+
+
+
+        </text>
+            }
+        }
+    })
+
+
+
+    </script>
+}

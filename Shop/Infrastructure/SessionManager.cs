@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.SessionState;
 
 namespace Shop.Infrastructure
 {
+
     public class SessionManager : ISessionManager
     {
         private HttpSessionState session;
 
         public SessionManager()
         {
-
-            session = HttpContext.Current.Session;
-
+          session = HttpContext.Current.Session;
         }
 
         public T Get<T>(string key)
@@ -30,6 +28,7 @@ namespace Shop.Infrastructure
         {
             session.Abandon();
         }
+
         public T TryGet<T>(string key)
         {
             try
